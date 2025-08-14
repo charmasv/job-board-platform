@@ -1,0 +1,43 @@
+// Replace ALL contents of prisma/schema.prisma with this:
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          Int      @id @default(autoincrement())
+  email       String   @unique
+  password    String
+  name        String?
+  type        String   // Values: JOB_SEEKER, EMPLOYER
+  createdAt   DateTime @default(now())
+  jobs        Job[]    @relation("EmployerJobs")
+  applications Application[]
+}
+
+model Job {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  company     String
+  location    String?
+  salary      Int?
+  createdAt   DateTime @default(now())
+  employer    User     @relation("EmployerJobs", fields: [employerId], references: [id])
+  employerId  Int
+  applications Application[]
+}
+
+model Application {
+  id          Int      @id @default(autoincrement())
+  job         Job      @relation(fields: [jobId], references: [id])
+  jobId       Int
+  applicant   User     @relation(fields: [applicantId], references: [id])
+  applicantId Int
+  status      String   @default("PENDING") // Values: PENDING, ACCEPTED, REJECTED
+  appliedAt   DateTime @default(now())
+}
