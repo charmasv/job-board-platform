@@ -4,10 +4,12 @@
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
-    "start": "node dist/index.js",
-    "dev": "nodemon --exec \"node --loader ts-node/esm src/index.ts\"",
-    "build": "tsc"
-  },
+  "start": "node dist/index.js",
+  "dev": "nodemon",
+  "build": "tsc",
+  "postinstall": "prisma generate"
+}
+,
   "keywords": [],
   "author": "",
   "license": "ISC",

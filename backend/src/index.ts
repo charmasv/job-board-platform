@@ -93,6 +93,9 @@ app.get('/test', (req, res) => {
   });
 });
 
+
+console.log("Available routes: /, /health, /test");
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
