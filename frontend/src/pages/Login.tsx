@@ -15,7 +15,7 @@ export const Login = () => {
     
     try {
       await login(email, password)
-      navigate('/dashboard')
+      navigate('/jobs')
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Login failed')
     }
