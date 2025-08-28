@@ -19,7 +19,7 @@ export const Register = () => {
     
     try {
       await register(formData.email, formData.password, formData.name, formData.type)
-      navigate('/dashboard')
+      navigate('/jobs')
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Registration failed')
     }
