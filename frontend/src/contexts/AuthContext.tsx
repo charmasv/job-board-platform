@@ -114,11 +114,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
-  const logout = (): void => {
-    setToken(null);
-    setUser(null);
-    localStorage.removeItem('token');
-  };
+  const logout = () => {
+  setToken(null);
+  setUser(null);
+  localStorage.removeItem('token');
+  // Force a redirect to home page after logout
+  window.location.href = '/';
+};
 
   const value: AuthContextType = {
     user,
