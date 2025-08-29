@@ -20,6 +20,8 @@ const JobsList: React.FC = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [applying, setApplying] = useState<number | null>(null);
+  const [applicationStatus, setApplicationStatus] = useState<{ [key: number]: string }>({});
   const { user, logout } = useAuth();
 
   useEffect(() => {
@@ -38,6 +40,39 @@ const JobsList: React.FC = () => {
 
     fetchJobs();
   }, []);
+
+  const handleApply = async (jobId: number) => {
+    if (!user) {
+      alert('Please login to apply for jobs');
+      return;
+    }
+
+    setApplying(jobId);
+    try {
+      const response = await fetch(`http://localhost:3000/api/jobs/${jobId}/apply`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setApplicationStatus(prev => ({ ...prev, [jobId]: 'applied' }));
+        alert('Application submitted successfully!');
+      } else {
+        setApplicationStatus(prev => ({ ...prev, [jobId]: 'error' }));
+        alert(data.error || 'Failed to apply to job');
+      }
+    } catch (error) {
+      setApplicationStatus(prev => ({ ...prev, [jobId]: 'error' }));
+      alert('Failed to apply to job');
+    } finally {
+      setApplying(null);
+    }
+  };
 
   if (loading) {
     return (
@@ -101,8 +136,22 @@ const JobsList: React.FC = () => {
                 <span className="text-sm text-gray-500">
                   Posted {new Date(job.createdAt).toLocaleDateString()}
                 </span>
-                <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors">
-                  Apply Now
+                <button 
+                  onClick={() => handleApply(job.id)}
+                  disabled={applying === job.id || applicationStatus[job.id] === 'applied'}
+                  className={`px-4 py-2 rounded transition-colors ${
+                    applicationStatus[job.id] === 'applied'
+                      ? 'bg-green-500 text-white'
+                      : applying === job.id
+                      ? 'bg-gray-400 text-white cursor-not-allowed'
+                      : 'bg-blue-500 text-white hover:bg-blue-600'
+                  }`}
+                >
+                  {applying === job.id
+                    ? 'Applying...'
+                    : applicationStatus[job.id] === 'applied'
+                    ? 'Applied ✓'
+                    : 'Apply Now'}
                 </button>
               </div>
             </div>
