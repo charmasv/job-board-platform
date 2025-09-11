@@ -38,9 +38,6 @@ model Application {
   jobId       Int
   applicant   User     @relation(fields: [applicantId], references: [id])
   applicantId Int
-  status      String   @default("PENDING")
+  status      String   @default("PENDING") // Values: PENDING, ACCEPTED, REJECTED
   appliedAt   DateTime @default(now())
-
-  // Add this unique constraint
-  @@unique([jobId, applicantId])
 }
