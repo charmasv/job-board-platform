@@ -226,7 +226,79 @@ app.get('/api/auth/me', authenticateToken, async (req: any, res) => {
 });
 
 // JOBS API ROUTES
+// Get employer's posted jobs
+app.get('/api/employer/jobs', authenticateToken, async (req: any, res) => {
+  try {
+    const jobs = await prisma.job.findMany({
+      where: {
+        employerId: req.user.userId
+      },
+      include: {
+        applications: {
+          include: {
+            applicant: {
+              select: {
+                id: true,
+                name: true,
+                email: true
+              }
+            }
+          }
+        }
+      },
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
+    res.json(jobs);
+  } catch (error) {
+    console.error('Error fetching employer jobs:', error);
+    res.status(500).json({ error: 'Failed to fetch jobs' });
+  }
+});
 
+// Update application status (employer only)
+app.put('/api/applications/:id/status', authenticateToken, async (req: any, res) => {
+  try {
+    const applicationId = parseInt(req.params.id);
+    const { status } = req.body;
+
+    // Verify user is the employer of this job
+    const application = await prisma.application.findUnique({
+      where: { id: applicationId },
+      include: {
+        job: true
+      }
+    });
+
+    if (!application || application.job.employerId !== req.user.userId) {
+      return res.status(404).json({ error: 'Application not found' });
+    }
+
+    const updatedApplication = await prisma.application.update({
+      where: { id: applicationId },
+      data: { status },
+      include: {
+        applicant: {
+          select: {
+            name: true,
+            email: true
+          }
+        },
+        job: {
+          select: {
+            title: true
+          }
+        }
+      }
+    });
+
+    res.json(updatedApplication);
+  } catch (error) {
+    console.error('Error updating application status:', error);
+    res.status(500).json({ error: 'Failed to update application status' });
+  }
+});
 // Get all jobs
 app.get('/api/jobs', async (req, res) => {
   try {
