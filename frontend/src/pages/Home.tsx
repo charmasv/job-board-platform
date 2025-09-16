@@ -19,12 +19,21 @@ const Home: React.FC = () => {
                 >
                   Browse Jobs
                 </Link>
-                <Link
-                  to="/applications"
-                  className="bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600"
-                >
-                  My Applications
-                </Link>
+                {user.type === 'JOB_SEEKER' ? (
+                  <Link
+                    to="/applications"
+                    className="bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600"
+                  >
+                    My Applications
+                  </Link>
+                ) : (
+                  <Link
+                    to="/employer-dashboard"
+                    className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+                  >
+                    Employer Dashboard
+                  </Link>
+                )}
               </>
             ) : (
               <>
