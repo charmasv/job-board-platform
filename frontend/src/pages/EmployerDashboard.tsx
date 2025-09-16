@@ -68,16 +68,16 @@ const EmployerDashboard: React.FC = () => {
       });
 
       if (response.ok) {
-        const updatedApplication = await response.json();
-        // Update local state
-        setJobs(prev => prev.map(job => ({
-          ...job,
-          applications: job.applications.map(app => 
-            app.id === applicationId ? { ...app, status } : app
-          )
-        })));
-        alert('Status updated successfully');
-      } else {
+  const updatedApplication = await response.json();
+  // Update local state using the response data
+  setJobs(prev => prev.map(job => ({
+    ...job,
+    applications: job.applications.map(app => 
+      app.id === applicationId ? updatedApplication : app
+    )
+  })));
+  alert('Status updated successfully');
+} else {
         throw new Error('Failed to update status');
       }
     } catch (err) {
