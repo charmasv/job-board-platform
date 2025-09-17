@@ -34,12 +34,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       
       if (storedToken) {
         try {
-          // Verify token with backend
-          const response = await fetch('http://localhost:3000/api/auth/verify', {
-            headers: {
-              'Authorization': `Bearer ${storedToken}`
-            }
-          });
+          // Verify token with backend using the existing me endpoint
+const response = await fetch('http://localhost:3000/api/auth/me', {
+  headers: {
+    'Authorization': `Bearer ${storedToken}`
+  }
+});
 
           if (response.ok) {
             const userData = await response.json();
