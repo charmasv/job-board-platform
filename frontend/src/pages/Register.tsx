@@ -7,7 +7,7 @@ export const Register = () => {
     email: '',
     password: '',
     name: '',
-    type: 'candidate'
+    type: 'JOB_SEEKER'
   })
   const [error, setError] = useState('')
   const { register, loading } = useAuth()
@@ -70,8 +70,8 @@ export const Register = () => {
           onChange={handleChange}
           className="w-full p-2 mb-3 border rounded"
         >
-          <option value="candidate">Job Seeker</option>
-          <option value="employer">Employer</option>
+          <option value="JOB_SEEKER">Job Seeker</option>
+          <option value="EMPLOYER">Employer</option>
         </select>
         <button 
           type="submit" 

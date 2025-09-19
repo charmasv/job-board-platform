@@ -11,47 +11,47 @@ const Home: React.FC = () => {
         <div className="max-w-6xl mx-auto px-4 py-6 flex justify-between items-center">
           <h1 className="text-3xl font-bold text-gray-900">Job Board</h1>
           <div className="flex gap-4">
-            {user ? (
-              <>
-                <Link
-                  to="/jobs"
-                  className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
-                >
-                  Browse Jobs
-                </Link>
-                {user.type === 'JOB_SEEKER' ? (
-                  <Link
-                    to="/applications"
-                    className="bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600"
-                  >
-                    My Applications
-                  </Link>
-                ) : (
-                  <Link
-                    to="/employer-dashboard"
-                    className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
-                  >
-                    Employer Dashboard
-                  </Link>
-                )}
-              </>
-            ) : (
-              <>
-                <Link
-                  to="/login"
-                  className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
-                >
-                  Login
-                </Link>
-                <Link
-                  to="/register"
-                  className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
-                >
-                  Register
-                </Link>
-              </>
-            )}
-          </div>
+  {user ? (
+    <>
+      <Link
+        to="/jobs"
+        className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+      >
+        Browse Jobs
+      </Link>
+      {user.type === 'JOB_SEEKER' ? (
+        <Link
+          to="/applications"
+          className="bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600"
+        >
+          My Applications
+        </Link>
+      ) : (
+        <Link
+          to="/employer-dashboard"
+          className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+        >
+          Employer Dashboard
+        </Link>
+      )}
+    </>
+  ) : (
+    <>
+      <Link
+        to="/login"
+        className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+      >
+        Login
+      </Link>
+      <Link
+        to="/register"
+        className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+      >
+        Register
+      </Link>
+    </>
+  )}
+</div>
         </div>
       </header>
 
