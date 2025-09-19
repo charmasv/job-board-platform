@@ -60,9 +60,6 @@ Employers: Create an account → Log in → Post & manage jobs.
 
 Job Seekers: Browse available jobs → Apply directly.
 
-🤝 Contributing
-
-Pull requests are welcome! If you’d like to add new features or fix bugs, please fork the repo and create a PR.
 
 📜 License
 All rights reserved
