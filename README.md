@@ -20,7 +20,7 @@ Frontend: Next.js, React, Tailwind CSS
 
 Backend: Node.js, Express
 
-Database: MongoDB (or specify what you used)
+Database: MongoDB 
 
 Authentication: JWT
 
